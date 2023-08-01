@@ -1,0 +1,61 @@
+<!-- Agregamos el enlace al archivo de estilos de Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <form #gastoForm="ngForm" (ngSubmit)="addGasto(gastoForm)">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="tipo" #name="ngModel" [(ngModel)]="gastoService.selectedGasto.tipo" placeholder="Ingrese el tipo de gasto">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="ruc" #name="ngModel" [(ngModel)]="gastoService.selectedGasto.ruc" placeholder="Ingrese el RUC de la empresa">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="empresa" #name="ngModel" [(ngModel)]="gastoService.selectedGasto.empresa" placeholder="Ingrese el nombre de la empresa">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="monto" #name="ngModel" [(ngModel)]="gastoService.selectedGasto.monto" placeholder="Ingrese el monto del gasto">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" *ngIf="!gastoService.selectedGasto._id" (click)="addGasto(gastoForm)">Grabar</button>
+                            <button class="btn btn-primary" *ngIf="gastoService.selectedGasto._id" (click)="editGasto(gastoForm)">Guardar Cambios</button>
+                            <button class="btn btn-secondary" (click)="resetForm(gastoForm)">Borrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Empresa</th>
+                        <th>RUC</th>
+                        <th>Monto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let gasto of gastoService.gastos">
+                        <td>{{gasto.tipo}}</td>
+                        <td>{{gasto.empresa}}</td>
+                        <td>{{gasto.ruc}}</td>
+                        <td>{{gasto.monto}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" (click)="editGastoForm(gasto)">
+                                <i class="material-icons">edit</i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" (click)="deleteGasto(gasto._id)">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
